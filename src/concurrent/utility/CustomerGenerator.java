@@ -39,7 +39,7 @@ public class CustomerGenerator  {
 
               {
 		      	  int productCount = generator.getRandomNumberInRange(1, 200);//variable to store number of products
-            	  Customer customer = new Customer("Customer"+i,productCount,time);//creating customer objects 
+            	  Customer customer = new Customer("C"+i,productCount,time);//creating customer objects 
             	 
             	  new Thread(customer, "Customer : "+i).start();//starting customer thread
             	  

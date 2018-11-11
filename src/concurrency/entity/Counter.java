@@ -9,13 +9,12 @@ public class Counter implements Runnable{
 	
 	private Queue<Customer> customers = new LinkedList<>();
 	private int counterId;
-	private int totalWaitingTime;
-	private long totalTime;
-	private long custCount;
-	private long avg;
-	private static volatile int totalCustomersProcessed;
-	private int totalProductsProcessed;
-	private static volatile int totalProductsProcessed_whole;
+	private long totalWaitingTime;
+	private static long avg;
+	private static volatile long totalCustomersProcessed;
+	private static volatile long totalProductsProcessed;
+	private static volatile long totalTime;
+	private static long avgTime;
 	private GenerateRandomNumbers generator = new GenerateRandomNumbers();
 	
 	public int getCounterId() {
@@ -34,7 +33,6 @@ public class Counter implements Runnable{
 		this.customers = customers;
 	}
 
-	@SuppressWarnings("static-access")
 	@Override
 	public void run() {
 		while (true) {
@@ -44,7 +42,7 @@ public class Counter implements Runnable{
 				{
 					try
 					{
-						customers.wait();
+						customers.wait();//if no customers arrived in the checkout wait
 					} catch (InterruptedException e) {
 						
 						e.printStackTrace();
@@ -53,11 +51,11 @@ public class Counter implements Runnable{
 				else
 				{					
 					
-					customers.notifyAll();	
+					customers.notifyAll();
 				}				
 			}
-			frontCustomer = customers.poll();			
-			int counterId = this.counterId;
+			frontCustomer = customers.poll();		// to pick the first customer	
+			int counterId = this.counterId;//to set the counter id
 			// updating UI
 			
 			if(counterId==1) {
@@ -88,17 +86,15 @@ public class Counter implements Runnable{
 			if( frontCustomer != null)
 			{
 				
-				this.custCount++;
 				int prodCount = frontCustomer.getProductCount();
-				this.totalProductsProcessed+=prodCount;
+				totalWaitingTime=0;
 				for(int i = 0; i < prodCount; i++)
 				{
-					totalProductsProcessed_whole++;
-					int time = generator.getRandomNumberInRange(1, 5);
-					//System.out.println(time);
-					totalWaitingTime+=time;
+					totalProductsProcessed++;
+					long time = generator.getRandomNumberInRange(1, 5);
+					totalWaitingTime+=time;//calculate wait time for each customer
 					frontCustomer.setProcessingTime(totalWaitingTime);
-					this.totalTime+=time;
+					totalTime+=totalWaitingTime;//calculate total wait time of all the customer
 					try 
 					{
 						Thread.sleep(time*2);
@@ -115,69 +111,72 @@ public class Counter implements Runnable{
 				
 				//update console
 				if(this.counterId==1) {
-					System.out.println(frontCustomer.getCustomerName()+" checked out from the Express Counter in "+this.totalWaitingTime+" milliseconds");
+					System.out.println(frontCustomer.getCustomerName()+" checked out from the Express Counter in "+frontCustomer.getProcessingTime()+" milliseconds");
 					totalCustomersProcessed++;
 					
 				}else {
-					System.out.println(frontCustomer.getCustomerName()+" checked out from Checkout" +(this.counterId-1)+" in "+this.totalWaitingTime+" milliseconds");
+					System.out.println(frontCustomer.getCustomerName()+" checked out from Checkout" +(this.counterId-1)+" in "+frontCustomer.getProcessingTime()+" milliseconds");
 					totalCustomersProcessed++;
 				}
 				
 				//update UI
 				if(counterId==1) {
-					Main.ui.getTextField_9().setText(frontCustomer.getCustomerName()+" :"+this.totalWaitingTime+" milliseconds");
-					Main.ui.getTextField_17().setText(this.totalProductsProcessed+"");
-					this.avg=this.totalTime/this.custCount;
-					Main.ui.getTextField_27().setText(this.avg+"");
+					Main.ui.getTextField_9().setText(frontCustomer.getProcessingTime()+" "+"ms");
+					Main.ui.getTextField_17().setText(frontCustomer.getCustomerName());
+					
+					Main.ui.getTextField_27().setText(frontCustomer.getProductCount()+"");
 				}
 				else if(counterId==2) {
-					Main.ui.getTextField_8().setText(frontCustomer.getCustomerName()+" :"+this.totalWaitingTime+" milliseconds");
-					Main.ui.getTextField_18().setText(this.totalProductsProcessed+"");
-					this.avg=this.totalTime/this.custCount;
-					Main.ui.getTextField_28().setText(this.avg+"");
+					Main.ui.getTextField_8().setText(frontCustomer.getProcessingTime()+" "+"ms");
+					Main.ui.getTextField_18().setText(frontCustomer.getCustomerName());
+					
+					Main.ui.getTextField_28().setText(frontCustomer.getProductCount()+"");
 				}
 				else if(counterId==3) {
-					Main.ui.getTextField_10().setText(frontCustomer.getCustomerName()+" :"+this.totalWaitingTime+" milliseconds");
-					Main.ui.getTextField_19().setText(this.totalProductsProcessed+"");
-					this.avg=this.totalTime/this.custCount;
-					Main.ui.getTextField_29().setText(this.avg+"");
+					Main.ui.getTextField_10().setText(frontCustomer.getProcessingTime()+" "+"ms");
+					Main.ui.getTextField_19().setText(frontCustomer.getCustomerName());
+					
+					Main.ui.getTextField_29().setText(frontCustomer.getProductCount()+"");
 				}
 				else if(counterId==4) {
-					Main.ui.getTextField_11().setText(frontCustomer.getCustomerName()+" :"+this.totalWaitingTime+" milliseconds");
-					Main.ui.getTextField_20().setText(this.totalProductsProcessed+"");
-					this.avg=this.totalTime/this.custCount;
-					Main.ui.getTextField_30().setText(this.avg+"");
+					Main.ui.getTextField_11().setText(frontCustomer.getProcessingTime()+" "+"ms");
+					Main.ui.getTextField_20().setText(frontCustomer.getCustomerName());
+					
+					Main.ui.getTextField_30().setText(frontCustomer.getProductCount()+"");
 				}
 				else if(counterId==5) {
-					Main.ui.getTextField_12().setText(frontCustomer.getCustomerName()+" :"+this.totalWaitingTime+" milliseconds");
-					Main.ui.getTextField_21().setText(this.totalProductsProcessed+"");
-					this.avg=this.totalTime/this.custCount;
-					Main.ui.getTextField_31().setText(this.avg+"");
+					Main.ui.getTextField_12().setText(frontCustomer.getProcessingTime()+" "+"ms");
+					Main.ui.getTextField_21().setText(frontCustomer.getCustomerName());
+					
+					Main.ui.getTextField_31().setText(frontCustomer.getProductCount()+"");
 				}
 				else if(counterId==6) {
-					Main.ui.getTextField_13().setText(frontCustomer.getCustomerName()+" :"+this.totalWaitingTime+" milliseconds");
-					Main.ui.getTextField_22().setText(this.totalProductsProcessed+"");
-					this.avg=this.totalTime/this.custCount;
-					Main.ui.getTextField_32().setText(this.avg+"");
+					Main.ui.getTextField_13().setText(frontCustomer.getProcessingTime()+" "+"ms");
+					Main.ui.getTextField_22().setText(frontCustomer.getCustomerName());
+					
+					Main.ui.getTextField_32().setText(frontCustomer.getProductCount()+"");
 				}
 				else if(counterId==7) {
-					Main.ui.getTextField_14().setText(frontCustomer.getCustomerName()+" :"+this.totalWaitingTime+" milliseconds");
-					Main.ui.getTextField_23().setText(this.totalProductsProcessed+"");
-					this.avg=this.totalTime/this.custCount;
-					Main.ui.getTextField_33().setText(this.avg+"");
+					Main.ui.getTextField_14().setText(frontCustomer.getProcessingTime()+" "+"ms");
+					Main.ui.getTextField_23().setText(frontCustomer.getCustomerName());
+					
+					Main.ui.getTextField_33().setText(frontCustomer.getProductCount()+"");
 				}
 				else if(counterId==8) {
-					Main.ui.getTextField_15().setText(frontCustomer.getCustomerName()+" :"+this.totalWaitingTime+" milliseconds");
-					Main.ui.getTextField_24().setText(this.totalProductsProcessed+"");
-					this.avg=this.totalTime/this.custCount;
-					Main.ui.getTextField_34().setText(this.avg+"");
+					Main.ui.getTextField_15().setText(frontCustomer.getProcessingTime()+" "+"ms");
+					Main.ui.getTextField_24().setText(frontCustomer.getCustomerName());
+					
+					Main.ui.getTextField_34().setText(frontCustomer.getProductCount()+"");
 				}
 
-				Main.ui.getTextField_25().setText(totalCustomersProcessed+"");
-				Main.ui.getTextField_26().setText(totalProductsProcessed_whole+"");
+				Main.ui.getTextField_25().setText(totalCustomersProcessed+"");//display ui total number of customers successfully processed
+				Main.ui.getTextField_26().setText(totalProductsProcessed+"");//display in ui total number of products processed
 
-
-					
+                avg=totalProductsProcessed/totalCustomersProcessed;
+                Main.ui.getTextField_36().setText(avg+"");//calculate average products per trolley assuming each customer has one trolley
+                
+				avgTime=totalTime/totalCustomersProcessed;
+				Main.ui.getTextField_37().setText(avgTime+"");//calculate average wait time of customers
 			}
 			
 			

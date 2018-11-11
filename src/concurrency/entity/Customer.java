@@ -6,18 +6,15 @@ import concurrent.utility.GenerateRandomNumbers;
 //Customer Class
 public class Customer implements Runnable{
 	
-	private static volatile int lostCustomers;
+	private static volatile int lostCustomers=0;
 	private String customerName;//to store customer name
 	private int productCount;//to store product count
-	private int processingTime;//to calculate processing time for each customer
+	private long processingTime;//to calculate processing time for each customer
 	private int queuecount;	
 	
 	GenerateRandomNumbers generator;//Create object reference for GenerateRandomNumbers
 	CustomerGenerator c;
-	public Customer() {
-		//constructor to do the basic stuff
-	}
-
+	
 	public Customer(String customerName,int productCount,int time) {//parameterized constructor
 		this.customerName=customerName;
 		this.productCount=productCount;
@@ -43,11 +40,11 @@ public class Customer implements Runnable{
 		return productCount;
 	}
 	
-	public int getProcessingTime() {
+	public long getProcessingTime() {
 		return processingTime;
 	}
 	//setter method 
-	public void setProcessingTime(int totalWaitingTime) {
+	public void setProcessingTime(long totalWaitingTime) {
 		this.processingTime = totalWaitingTime;
 	}
 	
@@ -64,18 +61,18 @@ public class Customer implements Runnable{
 				{
 					if((counter.getCustomers().size() < 6))//check if the size of the queue is less than 6
 					{
-						if(counter.getCounterId()==1 && this.productCount<=5) {
+						if(counter.getCounterId()==1 && this.productCount<=5) {//for product count less than or equal to 5
 							
-								counter.getCustomers().add(this);
+								counter.getCustomers().add(this);//join the queue
 								System.out.println( this.customerName+ " joined the Express Counter"+ " with "+ this.productCount+ " items");
 								foundQueue = true;//variable true;
 								counter.getCustomers().notifyAll();//notify other threads
 								break;
-							//join the queue
-						}
-						else if(counter.getCounterId()!=1 && this.productCount>5){
 							
-								counter.getCustomers().add(this);
+						}
+						else if(counter.getCounterId()!=1 && this.productCount>5){//for product count greater than 5
+							
+								counter.getCustomers().add(this);//join the queue
 								System.out.println( this.customerName+ " joined the Checkout"+(counter.getCounterId()-1)+ " with "+ this.productCount+ " items");
 								foundQueue = true;//variable true;
 								counter.getCustomers().notifyAll();//notify other threads
@@ -86,23 +83,22 @@ public class Customer implements Runnable{
 					}
 					else
 					{
-						counter.getCustomers().notifyAll();//doubt
-						queuecount++;
+						counter.getCustomers().notifyAll();//unlock the counter queue
+						this.queuecount++;//increment variable if a queue is not found
+						//System.out.println(this.queuecount);
 					}
 				
 				}
 			}
-			if(queuecount == 8)
+			if(this.queuecount == 8)//if customer does not add himself into a any queues
 			{
-				lostCustomers++;
-				// this 
-				break; // we break outer while loop since , the customer tried checking queues for 20 times
+				lostCustomers++;//calculate lost customers
+				Main.ui.getTextField_35().setText(lostCustomers+"");//update UI
+				break; // we break outer while loop since , the customer tried checking queues for 8 times
 			}
 			
 		}
-		if(lostCustomers!=0) {
-			System.out.println(lostCustomers);
-		}
+		
 	
 	}
 
