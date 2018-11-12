@@ -93,7 +93,7 @@ public class Counter implements Runnable{
 				for(int i = 0; i < prodCount; i++)
 				{
 					totalProductsProcessed++;
-					double time = generator.getRandomNumberInRange(0.6, 5);
+					double time = generator.getRandomNumberInRange(0.5, 6);
 					totalWaitingTime+=time;//calculate wait time for each customer
 					frontCustomer.setProcessingTime(totalWaitingTime);
 					totalTime+=totalWaitingTime;//calculate total wait time of all the customer
