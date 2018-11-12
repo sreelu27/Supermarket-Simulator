@@ -12,5 +12,14 @@ public class GenerateRandomNumbers {
 		Random r = new Random();
 		return r.nextInt((max - min) + 1) + min;
 	}
+	public double getRandomNumberInRange(double min, double max) {
+
+		if (min >= max) {
+			throw new IllegalArgumentException("max must be greater than min");
+		}
+
+		Random r = new Random();
+		return r.nextDouble()*(max-min) + min;
+	}
 
 }

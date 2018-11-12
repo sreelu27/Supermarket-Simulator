@@ -33,14 +33,13 @@ public class CustomerGenerator  {
 		      customerCount = generator.getRandomNumberInRange(1, 60);//variable to store count of customer generated 
               System.out.println("Number of customers: "+customerCount);//to display number of customers inside the shop
               Main.ui.getTextField_16().setText(""+customerCount);
-              int time=0;//Initially the time is set to zero
+   
               
               for(int i=1 ; i <=customerCount;i++)//loop to generate customer objects 
 
               {
 		      	  int productCount = generator.getRandomNumberInRange(1, 200);//variable to store number of products
-            	  Customer customer = new Customer("C"+i,productCount,time);//creating customer objects 
-            	 
+            	  Customer customer = new Customer("C"+i,productCount);//creating customer objects 
             	  new Thread(customer, "Customer : "+i).start();//starting customer thread
             	  
               }

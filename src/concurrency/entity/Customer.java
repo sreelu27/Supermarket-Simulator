@@ -6,19 +6,18 @@ import concurrent.utility.GenerateRandomNumbers;
 //Customer Class
 public class Customer implements Runnable{
 	
-	private static volatile int lostCustomers=0;
+	private static volatile int lostCustomers;//to store number of customers who left the shop
 	private String customerName;//to store customer name
 	private int productCount;//to store product count
 	private long processingTime;//to calculate processing time for each customer
-	private int queuecount;	
+	private int queuecount;	//to calculate the check times of customers
 	
 	GenerateRandomNumbers generator;//Create object reference for GenerateRandomNumbers
-	CustomerGenerator c;
 	
-	public Customer(String customerName,int productCount,int time) {//parameterized constructor
+	public Customer(String customerName,int productCount) {//parameterized constructor
 		this.customerName=customerName;
 		this.productCount=productCount;
-		this.processingTime=time;
+		//this.processingTime=time;
 		generator = new GenerateRandomNumbers();
 	}
 	public int getQueuecount() {
@@ -90,13 +89,18 @@ public class Customer implements Runnable{
 				
 				}
 			}
-			if(this.queuecount == 8)//if customer does not add himself into a any queues
+			//Main.ui.getTextField_35().setText(Integer.toString(0));
+			if(this.queuecount == 7 && this.productCount>5)//if customer does not add himself into a any queues
 			{
 				lostCustomers++;//calculate lost customers
-				Main.ui.getTextField_35().setText(lostCustomers+"");//update UI
-				break; // we break outer while loop since , the customer tried checking queues for 8 times
+				Main.ui.getTextField_35().setText(Integer.toString(lostCustomers));//update UI
+				break; // we break outer while loop since , the customer tried checking queues for 7 times
 			}
-			
+			else if(this.queuecount == 1 && this.productCount<=5){
+				lostCustomers++;//calculate lost customers
+				Main.ui.getTextField_35().setText(Integer.toString(lostCustomers));//update UI
+				break; // we break outer while loop since , the customer tried checking express counter for 1 time			}
+			}
 		}
 		
 	
