@@ -6,22 +6,15 @@ import concurrency.main.Main;
 //class to create customer objects
 public class CustomerGenerator  {
 
-	GenerateRandomNumbers generator;//Create reference of GenerateRandomNumbers class to generate random numbers
+	GenerateRandomNumbers generator = new GenerateRandomNumbers();//Create reference of GenerateRandomNumbers class to generate random numbers
 	
 	public int customerCount;
-	//Constructor
-	public CustomerGenerator()
-
-	{
-		generator = new GenerateRandomNumbers();//create object of the Class GenerateRandomNumbers
-
-	}
 
 	public void generateCustomers()//methods to generate customer objects
 
 	{
 
-		final long timeInterval = 10000;//variable to store time interval after which next set of customers are generated
+		final long timeInterval = 30000;//variable to store time interval after which next set of customers are generated
 		
 		Runnable runnable = new Runnable() {//Anonymous runnable class
 		

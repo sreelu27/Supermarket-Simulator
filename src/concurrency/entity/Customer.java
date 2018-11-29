@@ -94,12 +94,13 @@ public class Customer implements Runnable{
 			{
 				lostCustomers++;//calculate lost customers
 				Main.ui.getTextField_35().setText(Integer.toString(lostCustomers));//update UI
-				break; // we break outer while loop since , the customer tried checking queues for 7 times
+				//System.out.println(lostCustomers);
+				
 			}
 			else if(this.queuecount == 1 && this.productCount<=5){
 				lostCustomers++;//calculate lost customers
 				Main.ui.getTextField_35().setText(Integer.toString(lostCustomers));//update UI
-				break; // we break outer while loop since , the customer tried checking express counter for 1 time			}
+				//System.out.println(lostCustomers);
 			}
 		}
 		
