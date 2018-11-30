@@ -5,6 +5,8 @@ import java.util.Queue;
 import concurrency.main.Main;
 import concurrent.utility.GenerateRandomNumbers;
 
+//**********Author Sreelekshmi Geetha*********************
+//*****Counter Threads are created here and each customers are processed in this class**************
 public class Counter implements Runnable{
 	
 	private Queue<Customer> customers = new LinkedList<>();//customer queue
@@ -23,14 +25,14 @@ public class Counter implements Runnable{
 	private static volatile double totalCustomers6;
 	private static volatile double totalCustomers7;
 	private static volatile double totalCustomers8;
-	private static volatile long avgUtilization1;
-	private static volatile long avgUtilization2;
-	private static volatile long avgUtilization3;
-	private static volatile long avgUtilization4;
-	private static volatile long avgUtilization5;
-	private static volatile long avgUtilization6;
-	private static volatile long avgUtilization7;
-	private static volatile long avgUtilization8;
+	private static volatile int avgUtilization1;
+	private static volatile int avgUtilization2;
+	private static volatile int avgUtilization3;
+	private static volatile int avgUtilization4;
+	private static volatile int avgUtilization5;
+	private static volatile int avgUtilization6;
+	private static volatile int avgUtilization7;
+	private static volatile int avgUtilization8;
 	private GenerateRandomNumbers generator = new GenerateRandomNumbers();//insatance of utility class GenerateRandomNumber
 	
 	public int getCounterId() {
@@ -104,7 +106,7 @@ public class Counter implements Runnable{
 			if( frontCustomer != null)
 			{
 				
-				int prodCount = frontCustomer.getProductCount();
+				int prodCount = frontCustomer.getProductCount();//get product count
 				totalWaitingTime=0;
 				for(int i = 0; i < prodCount; i++)
 				{
@@ -142,7 +144,7 @@ public class Counter implements Runnable{
 					Main.ui.getTextField_9().setText(frontCustomer.getProcessingTime()+" "+"ms");
 					Main.ui.getTextField_17().setText(frontCustomer.getCustomerName());
 					Main.ui.getTextField_27().setText(frontCustomer.getProductCount()+"");
-					avgUtilization1 =(long) (((totalCustomers1/8)/(totalCustomersProcessed/8))*100);
+					avgUtilization1 =(int) (((totalCustomers1)/(totalCustomersProcessed))*100);
 					Main.ui.getTextField_38().setText(Long.toString(avgUtilization1)+"%");
 					
 				}
@@ -151,7 +153,7 @@ public class Counter implements Runnable{
 					Main.ui.getTextField_8().setText(frontCustomer.getProcessingTime()+" "+"ms");
 					Main.ui.getTextField_18().setText(frontCustomer.getCustomerName());
 					Main.ui.getTextField_28().setText(frontCustomer.getProductCount()+"");
-					avgUtilization2 =(long) (((totalCustomers2/8)/(totalCustomersProcessed/8))*100);
+					avgUtilization2 =(int) (((totalCustomers2)/(totalCustomersProcessed))*100);
 					Main.ui.getTextField_39().setText(Long.toString(avgUtilization2)+"%");
 				}
 				
@@ -160,7 +162,7 @@ public class Counter implements Runnable{
 					Main.ui.getTextField_10().setText(frontCustomer.getProcessingTime()+" "+"ms");
 					Main.ui.getTextField_19().setText(frontCustomer.getCustomerName());
 					Main.ui.getTextField_29().setText(frontCustomer.getProductCount()+"");
-					avgUtilization3 =(long) (((totalCustomers3/8)/(totalCustomersProcessed/8))*100);
+					avgUtilization3 =(int) (((totalCustomers3)/(totalCustomersProcessed))*100);
 					Main.ui.getTextField_40().setText(Long.toString(avgUtilization3)+"%");
 				}
 				else if(counterId==4) {
@@ -168,7 +170,7 @@ public class Counter implements Runnable{
 					Main.ui.getTextField_11().setText(frontCustomer.getProcessingTime()+" "+"ms");
 					Main.ui.getTextField_20().setText(frontCustomer.getCustomerName());
 					Main.ui.getTextField_30().setText(frontCustomer.getProductCount()+"");
-					avgUtilization4 =(long) (((totalCustomers4/8)/(totalCustomersProcessed/8))*100);
+					avgUtilization4 =(int) (((totalCustomers4)/(totalCustomersProcessed))*100);
 					Main.ui.getTextField_41().setText(Long.toString(avgUtilization4)+"%");
 				}
 				else if(counterId==5) {
@@ -176,7 +178,7 @@ public class Counter implements Runnable{
 					Main.ui.getTextField_12().setText(frontCustomer.getProcessingTime()+" "+"ms");
 					Main.ui.getTextField_21().setText(frontCustomer.getCustomerName());
 					Main.ui.getTextField_31().setText(frontCustomer.getProductCount()+"");
-					avgUtilization5 =(long) (((totalCustomers5/8)/(totalCustomersProcessed/8))*100);
+					avgUtilization5 =(int) (((totalCustomers5)/(totalCustomersProcessed))*100);
 					Main.ui.getTextField_42().setText(Long.toString(avgUtilization5)+"%");
 				}
 				else if(counterId==6) {
@@ -184,7 +186,7 @@ public class Counter implements Runnable{
 					Main.ui.getTextField_13().setText(frontCustomer.getProcessingTime()+" "+"ms");
 					Main.ui.getTextField_22().setText(frontCustomer.getCustomerName());
 					Main.ui.getTextField_32().setText(frontCustomer.getProductCount()+"");
-					avgUtilization6 =(long) (((totalCustomers6/8)/(totalCustomersProcessed/8))*100);
+					avgUtilization6 =(int) (((totalCustomers6)/(totalCustomersProcessed))*100);
 					Main.ui.getTextField_43().setText(Long.toString(avgUtilization6)+"%");
 				}
 				else if(counterId==7) {
@@ -192,7 +194,7 @@ public class Counter implements Runnable{
 					Main.ui.getTextField_14().setText(frontCustomer.getProcessingTime()+" "+"ms");
 					Main.ui.getTextField_23().setText(frontCustomer.getCustomerName());
 					Main.ui.getTextField_33().setText(frontCustomer.getProductCount()+"");
-					avgUtilization7 =(long) (((totalCustomers7/8)/(totalCustomersProcessed/8))*100);
+					avgUtilization7 =(int) (((totalCustomers7)/(totalCustomersProcessed))*100);
 					Main.ui.getTextField_44().setText(Long.toString(avgUtilization7)+"%");
 				}
 				else if(counterId==8) {
@@ -200,7 +202,7 @@ public class Counter implements Runnable{
 					Main.ui.getTextField_15().setText(frontCustomer.getProcessingTime()+" "+"ms");
 					Main.ui.getTextField_24().setText(frontCustomer.getCustomerName());
 					Main.ui.getTextField_34().setText(frontCustomer.getProductCount()+"");
-					avgUtilization8 =(long) (((totalCustomers8/8)/(totalCustomersProcessed/8))*100);
+					avgUtilization8 =(int) (((totalCustomers8)/(totalCustomersProcessed))*100);
 					Main.ui.getTextField_45().setText(Long.toString(avgUtilization8)+"%");
 				}
 				Main.ui.getTextField_25().setText(Long.toString(totalCustomersProcessed));//display ui total number of customers successfully processed
@@ -211,6 +213,8 @@ public class Counter implements Runnable{
                 
 				avgTime=(totalTime/totalCustomersProcessed)/1000;
 				Main.ui.getTextField_37().setText(Long.toString(avgTime)+ " secs");//calculate average wait time of customers
+				
+				
 				
 				
 			}

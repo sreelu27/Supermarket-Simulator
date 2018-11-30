@@ -5,7 +5,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.Font;
 import java.awt.Window.Type;
-
+//***************Authors: Sreelekshmi Geetha & Sultan Hydrali********************
+// UI class
 public class UI {
 
 	private JFrame frmSupermarketSimulator;
@@ -63,6 +64,7 @@ public class UI {
 	private JTextField textField_43;
 	private JTextField textField_44;
 	private JTextField textField_45;
+	private JLabel lblStatistics;
 
 	public UI() {
 		initialize();
@@ -249,11 +251,14 @@ public class UI {
 	public JTextField getTextField_45() {
 		return textField_45;
 	}
+	
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
 		frmSupermarketSimulator = new JFrame();
+		frmSupermarketSimulator.getContentPane().setFont(new Font("Tahoma", Font.BOLD, 11));
 		frmSupermarketSimulator.setType(Type.POPUP);
 		frmSupermarketSimulator.setTitle("Supermarket simulator");
 		frmSupermarketSimulator.setBounds(100, 100, 958, 524);
@@ -571,6 +576,10 @@ public class UI {
 		textField_45.setColumns(10);
 		textField_45.setBounds(477, 427, 67, 19);
 		frmSupermarketSimulator.getContentPane().add(textField_45);
+		
+		lblStatistics = new JLabel("Statistics");
+		lblStatistics.setBounds(743, 22, 115, 18);
+		frmSupermarketSimulator.getContentPane().add(lblStatistics);
 		
 		
 		

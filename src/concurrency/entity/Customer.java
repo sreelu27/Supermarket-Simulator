@@ -1,12 +1,12 @@
 package concurrency.entity;
-
+////***************Authors: Sreelekshmi Geetha & Sultan Hydrali********************
 import concurrency.main.Main;
 import concurrent.utility.CustomerGenerator;
 import concurrent.utility.GenerateRandomNumbers;
 //Customer Class
 public class Customer implements Runnable{
 	
-	private static volatile int lostCustomers;//to store number of customers who left the shop
+	private static int lostCustomers;//to store number of customers who left the shop
 	private String customerName;//to store customer name
 	private int productCount;//to store product count
 	private long processingTime;//to calculate processing time for each customer
@@ -17,7 +17,6 @@ public class Customer implements Runnable{
 	public Customer(String customerName,int productCount) {//parameterized constructor
 		this.customerName=customerName;
 		this.productCount=productCount;
-		//this.processingTime=time;
 		generator = new GenerateRandomNumbers();
 	}
 	public int getQueuecount() {
@@ -47,6 +46,14 @@ public class Customer implements Runnable{
 		this.processingTime = totalWaitingTime;
 	}
 	
+	public static synchronized void increaseLostCustomers() {
+		lostCustomers++;
+	}
+	
+	public static synchronized int getLostCustomers() {
+		return lostCustomers;
+	}
+	
 	@Override
 	public void run() {
 		
@@ -64,6 +71,7 @@ public class Customer implements Runnable{
 							
 								counter.getCustomers().add(this);//join the queue
 								System.out.println( this.customerName+ " joined the Express Counter"+ " with "+ this.productCount+ " items");
+								System.out.println(Thread.currentThread().getName());
 								foundQueue = true;//variable true;
 								counter.getCustomers().notifyAll();//notify other threads
 								break;
@@ -89,19 +97,21 @@ public class Customer implements Runnable{
 				
 				}
 			}
+			
 			//Main.ui.getTextField_35().setText(Integer.toString(0));
 			if(this.queuecount == 7 && this.productCount>5)//if customer does not add himself into a any queues
 			{
-				lostCustomers++;//calculate lost customers
-				Main.ui.getTextField_35().setText(Integer.toString(lostCustomers));//update UI
+				Customer.increaseLostCustomers();//calculate lost customers
+				Main.ui.getTextField_35().setText(""+Customer.getLostCustomers());//update UI
 				//System.out.println(lostCustomers);
 				
 			}
 			else if(this.queuecount == 1 && this.productCount<=5){
-				lostCustomers++;//calculate lost customers
-				Main.ui.getTextField_35().setText(Integer.toString(lostCustomers));//update UI
+				Customer.increaseLostCustomers();//calculate lost customers
+				Main.ui.getTextField_35().setText(""+Customer.getLostCustomers());//update UI
 				//System.out.println(lostCustomers);
 			}
+			
 		}
 		
 	

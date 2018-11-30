@@ -1,7 +1,7 @@
 package concurrent.utility;
-
+////***************Authors: Sreelekshmi Geetha & Sultan Hydrali********************
 import java.util.Random;
-
+//utility class
 public class GenerateRandomNumbers {
 	public int getRandomNumberInRange(int min, int max) {
 

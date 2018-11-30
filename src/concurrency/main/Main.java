@@ -1,4 +1,6 @@
 package concurrency.main;
+
+//***************Authors: Sreelekshmi Geetha & Sultan Hydrali********************
 import java.util.ArrayList;
 import java.util.List;
 import concurrency.entity.Counter;
@@ -17,6 +19,7 @@ public class Main{
 			Main main = new Main();//Creating Main class reference and object
 			main.generateCounters();//calling method to generate the checkout counter objects
 			main.customerGenerator.generateCustomers();//method to generate the customer objects
+			System.out.println(Thread.currentThread().getName());
 			
 			
 		}
