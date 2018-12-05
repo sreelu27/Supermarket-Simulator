@@ -8,21 +8,21 @@ public class CustomerGenerator  {
 
 	GenerateRandomNumbers generator = new GenerateRandomNumbers();//Create reference of GenerateRandomNumbers class to generate random numbers
 	
-	public int customerCount;//to generate the set of customer
+	public int customerCount;//to store the number of customers created
 
 	public void generateCustomers()//methods to generate customer objects
 
 	{
 
-		final long timeInterval = 3000;//variable to store time interval after which next set of customers are generated
+		final long timeInterval = 6000;//variable to store time interval after which next set of customers are generated
 		
 		Runnable runnable = new Runnable() {//Anonymous runnable class
 		
 		public void run() {//implemented run method	
 		
-		 while (true ) {//to make the method infinite
+		 while (true ) {//to make the loop infinite
 
-		      System.out.println("Customer set is generated!!!");// to display message when customer set is generated
+		      System.out.println("****************Customer set is generated!!!**********");// to display message when customer set is generated
 		      customerCount = generator.getRandomNumberInRange(1, 60);//variable to store count of customer generated 
               System.out.println("Number of customers: "+customerCount);//to display number of customers inside the shop
               Main.ui.getTextField_16().setText(""+customerCount);//update UI

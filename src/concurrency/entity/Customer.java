@@ -19,17 +19,13 @@ public class Customer implements Runnable{
 		this.productCount=productCount;
 		generator = new GenerateRandomNumbers();
 	}
+	
+	//Getter methods of attributes
+
 	public int getQueuecount() {
 		return queuecount;
 	}
-
-	public void setQueuecount(int queuecount) {
-		this.queuecount = queuecount;
-	}
-
-	//Getter methods of attributes
-
-
+	
 	public String getCustomerName() {
 		return customerName;
 	}
@@ -42,14 +38,20 @@ public class Customer implements Runnable{
 		return processingTime;
 	}
 	//setter method 
+	
+	public void setQueuecount(int queuecount) {
+		this.queuecount = queuecount;
+	}
+
 	public void setProcessingTime(long totalWaitingTime) {
 		this.processingTime = totalWaitingTime;
 	}
 	
+	//to calculate lost customer count
 	public static synchronized void increaseLostCustomers() {
 		lostCustomers++;
 	}
-	
+	//to retrieve the value of lost customers
 	public static synchronized int getLostCustomers() {
 		return lostCustomers;
 	}
@@ -57,7 +59,7 @@ public class Customer implements Runnable{
 	@Override
 	public void run() {
 		
-		boolean foundQueue = false;
+		boolean foundQueue = false;//variable is set to false initially
 		while(!foundQueue)
 		{
 			
@@ -71,9 +73,8 @@ public class Customer implements Runnable{
 							
 								counter.getCustomers().add(this);//join the queue
 								System.out.println( this.customerName+ " joined the Express Counter"+ " with "+ this.productCount+ " items");
-								System.out.println(Thread.currentThread().getName());
-								foundQueue = true;//variable true;
-								counter.getCustomers().notifyAll();//notify other threads
+								foundQueue = true;//variable true as the customer found a queue;
+								counter.getCustomers().notifyAll();//notify other customer threads
 								break;
 							
 						}
@@ -81,8 +82,8 @@ public class Customer implements Runnable{
 							
 								counter.getCustomers().add(this);//join the queue
 								System.out.println( this.customerName+ " joined the Checkout"+(counter.getCounterId()-1)+ " with "+ this.productCount+ " items");
-								foundQueue = true;//variable true;
-								counter.getCustomers().notifyAll();//notify other threads
+								foundQueue = true;//variable true as the customer found a queue;
+								counter.getCustomers().notifyAll();//notify other customer threads
 								break;
 							
 						}
@@ -92,25 +93,26 @@ public class Customer implements Runnable{
 					{
 						counter.getCustomers().notifyAll();//unlock the counter queue
 						this.queuecount++;//increment variable if a queue is not found
-						//System.out.println(this.queuecount);
+						
 					}
 				
 				}
 			}
 			
-			//Main.ui.getTextField_35().setText(Integer.toString(0));
-			if(this.queuecount == 7 && this.productCount>5)//if customer does not add himself into a any queues
+			if(this.queuecount == 7 && this.productCount>5)//if customer does not add himself into a any queues and this is for normal counter
 			{
 				Customer.increaseLostCustomers();//calculate lost customers
-				Main.ui.getTextField_35().setText(""+Customer.getLostCustomers());//update UI
-				//System.out.println(lostCustomers);
+				
 				
 			}
-			else if(this.queuecount == 1 && this.productCount<=5){
+			else if(this.queuecount == 1 && this.productCount<=5){ //if customer does not add himself into a any queues and this is for express counter
 				Customer.increaseLostCustomers();//calculate lost customers
-				Main.ui.getTextField_35().setText(""+Customer.getLostCustomers());//update UI
-				//System.out.println(lostCustomers);
+				
 			}
+			if(Customer.getLostCustomers()!=0) {
+				Main.ui.getTextField_35().setText(Integer.toString(Customer.getLostCustomers()));//update UI
+			}
+			
 			
 		}
 		

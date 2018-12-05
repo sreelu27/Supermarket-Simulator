@@ -7,10 +7,11 @@ import concurrency.entity.Counter;
 import concurrent.ui.UI;
 import concurrent.utility.CustomerGenerator;
 
+//main class
 public class Main{
 	
 	public static List<Counter> counters = new ArrayList<>();//to store the set of counter objects
-	private CustomerGenerator customerGenerator = new CustomerGenerator(); //to generate customer objects
+	private CustomerGenerator customerGenerator = new CustomerGenerator(); //reference of CustomerGenerator class
 	public static UI ui;//GUI object reference
 
 		public static void main(String[] arg) throws InterruptedException{
@@ -19,7 +20,7 @@ public class Main{
 			Main main = new Main();//Creating Main class reference and object
 			main.generateCounters();//calling method to generate the checkout counter objects
 			main.customerGenerator.generateCustomers();//method to generate the customer objects
-			System.out.println(Thread.currentThread().getName());
+			System.out.println(Thread.currentThread().getName());//console
 			
 			
 		}
